@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TagsController;
+use App\Http\Controllers\QuestionsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,6 +41,30 @@ Route::get('/tags/{tag}', [TagsController::class, 'show'])->name('tags.show'); /
 Route::get('/tags/{tag}/edit', [TagsController::class, 'edit'])->name('tags.edit'); // Formulaire de modification
 Route::put('/tags/{tag}', [TagsController::class, 'update'])->name('tags.update'); // Modifier un tag
 Route::delete('/tags/{tag}', [TagsController::class, 'destroy'])->name('tags.destroy'); // Supprimer un tag
+
+
+
+// Display a list of questions
+Route::get('/questions', [QuestionsController::class, 'index'])->name('questions.index');
+
+// Show the form to create a new question
+Route::get('/questions/create', [QuestionsController::class, 'create'])->name('questions.create');
+
+// Store a new question in the database
+Route::post('/questions', [QuestionsController::class, 'store'])->name('questions.store');
+
+// Show a specific question
+Route::get('/questions/{id}', [QuestionsController::class, 'show'])->name('questions.show');
+
+// Show the form to edit an existing question
+Route::get('/questions/{id}/edit', [QuestionsController::class, 'edit'])->name('questions.edit');
+
+// Update an existing question
+Route::put('/questions/{id}', [QuestionsController::class, 'update'])->name('questions.update');
+
+// Delete a question
+Route::delete('/questions/{id}', [QuestionsController::class, 'destroy'])->name('questions.destroy');
+
 });
 
 

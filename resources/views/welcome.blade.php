@@ -52,10 +52,15 @@
                 </div>
                 <!-- Desktop Menu -->
                 <div class="hidden md:flex items-center space-x-6">
-                    <a href="/login" class="text-gray-300 hover:text-white transition-colors">Sign In</a>
-                    <a href="/register" class="px-6 py-2 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 transition-all transform hover:scale-105">
-                        Join Now
-                    </a>
+                    @auth
+                        <a href="{{ route('dashboard') }}" class="text-gray-300 hover:text-white transition-colors">Dashboard</a>
+                        
+                    @else
+                        <a href="{{ route('login') }}" class="text-gray-300 hover:text-white transition-colors">Sign In</a>
+                        <a href="{{ route('register') }}" class="px-6 py-2 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 transition-all transform hover:scale-105">
+                            Join Now
+                        </a>
+                    @endauth
                 </div>
                 <!-- Burger Button for Mobile -->
                 <div class="md:hidden flex items-center">
@@ -68,13 +73,19 @@
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="md:hidden bg-gray-800">
             <div class="px-4 py-2 space-y-4">
-                <a href="/login" class="block text-gray-300 hover:text-white transition-colors">Sign In</a>
-                <a href="/register" class="block px-4 py-2 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 transition-all transform hover:scale-105 text-center">
-                    Join Now
-                </a>
+                @auth
+                    <a href="{{ route('dashboard') }}" class="block text-gray-300 hover:text-white transition-colors">Dashboard</a>
+                   
+                @else
+                    <a href="{{ route('login') }}" class="block text-gray-300 hover:text-white transition-colors">Sign In</a>
+                    <a href="{{ route('register') }}" class="block px-4 py-2 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 transition-all transform hover:scale-105 text-center">
+                        Join Now
+                    </a>
+                @endauth
             </div>
         </div>
     </nav>
+    
 
     <!-- Hero Section -->
     <div class="gradient-bg min-h-screen pt-20 relative overflow-hidden">
