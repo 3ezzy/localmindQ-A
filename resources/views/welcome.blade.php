@@ -53,7 +53,7 @@
                 <!-- Desktop Menu -->
                 <div class="hidden md:flex items-center space-x-6">
                     @auth
-                        <a href="{{ route('dashboard') }}" class="text-gray-300 hover:text-white transition-colors">Dashboard</a>
+                        <a href="{{ route('questions.index') }}" class="text-gray-300 hover:text-white transition-colors">Dashboard</a>
                         
                     @else
                         <a href="{{ route('login') }}" class="text-gray-300 hover:text-white transition-colors">Sign In</a>
@@ -74,7 +74,7 @@
         <div id="mobile-menu" class="md:hidden bg-gray-800">
             <div class="px-4 py-2 space-y-4">
                 @auth
-                    <a href="{{ route('dashboard') }}" class="block text-gray-300 hover:text-white transition-colors">Dashboard</a>
+                    <a href="{{ route('questions.index') }}" class="block text-gray-300 hover:text-white transition-colors">Dashboard</a>
                    
                 @else
                     <a href="{{ route('login') }}" class="block text-gray-300 hover:text-white transition-colors">Sign In</a>

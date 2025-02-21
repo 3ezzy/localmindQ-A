@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TagsController;
 use App\Http\Controllers\QuestionsController;
+use App\Http\Controllers\AnswersController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,12 +20,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/questions', function () {
-    return view('questions.create');
-});
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+
+
 
 
 
@@ -45,7 +42,7 @@ Route::delete('/tags/{tag}', [TagsController::class, 'destroy'])->name('tags.des
 
 
 // Display a list of questions
-Route::get('/questions', [QuestionsController::class, 'index'])->name('questions.index');
+Route::get('/dashboard', [QuestionsController::class, 'index'])->name('questions.index');
 
 // Show the form to create a new question
 Route::get('/questions/create', [QuestionsController::class, 'create'])->name('questions.create');
@@ -64,6 +61,29 @@ Route::put('/questions/{id}', [QuestionsController::class, 'update'])->name('que
 
 // Delete a question
 Route::delete('/questions/{id}', [QuestionsController::class, 'destroy'])->name('questions.destroy');
+
+
+
+// Display a list of answers (all answers)
+Route::get('/answers', [AnswersController::class, 'index'])->name('answers.index');
+
+// Show the form to create a new answer
+Route::get('/questions/{question}/answers', [AnswersController::class, 'create'])->name('answers.create');
+
+// Store a new answer
+Route::post('/answers', [AnswersController::class, 'store'])->name('answers.store');
+
+// Show a specific answer
+Route::get('/answers/{id}', [AnswersController::class, 'show'])->name('answers.show');
+
+// Show the form to edit an existing answer
+Route::get('/answers/{id}/edit', [AnswersController::class, 'edit'])->name('answers.edit');
+
+// Update an existing answer
+Route::put('/answers/{id}', [AnswersController::class, 'update'])->name('answers.update');
+
+// Delete an answer
+Route::delete('/answers/{id}', [AnswersController::class, 'destroy'])->name('answers.destroy');
 
 });
 

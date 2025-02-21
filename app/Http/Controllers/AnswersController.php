@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Question;
+use App\Models\Answer;
 
 class AnswersController extends Controller
 {
@@ -32,11 +34,22 @@ class AnswersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
-    }
+    public function store(Request $request, Question $question)
+    {      
+        $validated = $request->validate([
+            'body' => 'required|min:10',
+            "question_id" => 'required|exists:questions,id'
+        ]);
+        $answer = Answer::create([
+            'body' => $validated['body'],
+            'user_id' => auth()->id(),  
+            'question_id' => $validated['question_id'],
+        ]);
 
+        return redirect()
+            ->back()
+            ->with('success', 'Your answer has been posted successfully!');
+    }
     /**
      * Display the specified resource.
      *

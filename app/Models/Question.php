@@ -16,13 +16,22 @@ class Question extends Model
         'user_id'
     ];
 
-    public function tag()
-    {
-        return $this->belongsTo(Tag::class);
-    }
+  // Define the relationship with User
+  public function user()
+  {
+      return $this->belongsTo(User::class);
+  }
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
+  // Define the relationship with Tag
+  public function tag()
+  {
+      return $this->belongsTo(Tag::class);
+  }
+
+
+  // Add this relationship method for answers
+  public function answers()
+  {
+      return $this->hasMany(Answer::class);
+  }
 }

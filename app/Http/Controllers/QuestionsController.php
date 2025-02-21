@@ -16,7 +16,12 @@ class QuestionsController extends Controller
      */
     public function index()
     {
-        //
+        $questions = Question::with(['user', 'tag'])
+            ->withCount('answers')
+            ->latest()
+            ->paginate(10);
+
+        return view('dashboard', compact('questions'));
     }
 
     /**
@@ -40,7 +45,7 @@ class QuestionsController extends Controller
             'title' => 'required|min:10|max:255',
             'body' => 'required|min:10',
             'tag_id' => 'required|exists:tags,id',
-            'notify' => 'required|boolean|in:1', 
+            'notify' => 'required|boolean|in:1',
         ]);
 
         try {
@@ -59,7 +64,6 @@ class QuestionsController extends Controller
             return redirect()
                 ->route('questions.show', $question)
                 ->with('success', 'Your question has been posted successfully!');
-
         } catch (\Exception $e) {
             return back()
                 ->withInput()
@@ -75,7 +79,10 @@ class QuestionsController extends Controller
      */
     public function show($id)
     {
-        //
+        $question = Question::with(['user', 'tag'])->findOrFail($id);
+        $answers = $question->answers()->with('user')->latest()->get();
+
+        return view('questions.show', compact('question', 'answers'));
     }
 
     /**
