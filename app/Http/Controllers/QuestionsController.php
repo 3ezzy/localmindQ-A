@@ -20,7 +20,6 @@ class QuestionsController extends Controller
             ->withCount('answers')
             ->latest();
 
-        // التأكد من أن هناك tag_id في الطلب
         if ($request->has('tag_id') && !empty($request->tag_id)) {
             $query->whereHas('tag', function ($q) use ($request) {
                 $q->where('tag_id', $request->tag_id);
@@ -28,7 +27,7 @@ class QuestionsController extends Controller
         }
 
         $questions = $query->paginate(10)->appends($request->query());
-        $tags = Tag::orderBy('name')->get(); // جلب جميع الوسوم لعرضها في الفلتر
+        $tags = Tag::orderBy('name')->get(); 
 
         return view('dashboard', compact('questions', 'tags'));
     }
