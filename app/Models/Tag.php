@@ -13,8 +13,8 @@ class Tag extends Model
         'name',
     ];
     public function questions()
-    {
-        return $this->belongsToMany(Question::class);
-    }
+{
+    return $this->hasMany(Question::class);
+}
 
 }

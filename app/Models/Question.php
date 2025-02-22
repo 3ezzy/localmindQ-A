@@ -24,9 +24,9 @@ class Question extends Model
 
   // Define the relationship with Tag
   public function tag()
-  {
-      return $this->belongsTo(Tag::class);
-  }
+{
+    return $this->belongsTo(Tag::class);
+}
 
 
   // Add this relationship method for answers

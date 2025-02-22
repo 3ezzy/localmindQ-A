@@ -14,16 +14,22 @@ class QuestionsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $questions = Question::with(['user', 'tag'])
+        $query = Question::with(['user', 'tag'])
             ->withCount('answers')
-            ->latest()
-            ->paginate(10);
+            ->latest();
 
-        return view('dashboard', compact('questions'));
+        // Filter by tag if selected
+        if ($request->has('tag_id')) {
+            $query->where('tag_id', $request->tag_id);
+        }
+
+        $questions = $query->paginate(10)->appends($request->query());
+        $tags = Tag::orderBy('name')->get(); // Get all tags for the filter
+
+        return view('dashboard', compact('questions', 'tags'));
     }
-
     /**
      * Show the form for creating a new resource.
      *
