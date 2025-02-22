@@ -20,16 +20,19 @@ class QuestionsController extends Controller
             ->withCount('answers')
             ->latest();
 
-        // Filter by tag if selected
-        if ($request->has('tag_id')) {
-            $query->where('tag_id', $request->tag_id);
+        // التأكد من أن هناك tag_id في الطلب
+        if ($request->has('tag_id') && !empty($request->tag_id)) {
+            $query->whereHas('tag', function ($q) use ($request) {
+                $q->where('tag_id', $request->tag_id);
+            });
         }
 
         $questions = $query->paginate(10)->appends($request->query());
-        $tags = Tag::orderBy('name')->get(); // Get all tags for the filter
+        $tags = Tag::orderBy('name')->get(); // جلب جميع الوسوم لعرضها في الفلتر
 
         return view('dashboard', compact('questions', 'tags'));
     }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -99,8 +102,11 @@ class QuestionsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $question = Question::findOrFail($id); // Récupérer la question
+        $tags = Tag::all(); // Récupérer toutes les catégories
+        return view('questions.edit', compact('question', 'tags'));
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -111,7 +117,21 @@ class QuestionsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'body' => 'required',
+            'tag_id' => 'required|exists:tags,id'
+        ]);
+
+        $question = Question::findOrFail($id);
+        $question->update([
+            'title' => $request->title,
+            'body' => $request->body,
+            'tag_id' => $request->tag_id,
+        ]);
+
+        return redirect()->route('questions.show', $question->id)
+            ->with('success', 'Question updated successfully!');
     }
 
     /**
@@ -122,6 +142,11 @@ class QuestionsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $question = Question::findOrFail($id);
+        $question->delete();
+    
+        return redirect()->route('questions.index')
+                         ->with('success', 'Question deleted successfully!');
     }
+    
 }
