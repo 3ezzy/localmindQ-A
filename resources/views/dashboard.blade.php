@@ -74,7 +74,7 @@
             </p>
         </div>
 
-        <!-- Action Bar -->
+
         <!-- Action Bar -->
         <div class="flex flex-col md:flex-row justify-between items-center mb-12 space-y-4 md:space-y-0">
             <div class="flex space-x-4 w-full">
