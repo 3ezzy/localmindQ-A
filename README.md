@@ -88,8 +88,7 @@ localmindQ-A/
 ## 🤝 Contributing
 Contributions are welcome! Please feel free to submit a Pull Request. We appreciate your input! 
 
-## 📄 License
-[Your chosen license]
+
 
 ## 📬 Contact
 - 👨‍💻 Developer: [@3ezzy](https://github.com/3ezzy)
